@@ -96,7 +96,7 @@ const Scoreboard = ({
             : (occurances.total += die.value);
         });
         Object.keys(occurances).forEach((key) => {
-          if (occurances[key] >= 4) {
+          if (occurances[key] >= 4 && key !== 'total') {
             sum = occurances.total;
           }
         });
@@ -119,7 +119,7 @@ const Scoreboard = ({
             : (occurances.total += die.value);
         });
         Object.keys(occurances).forEach((key) => {
-          if (occurances[key] >= 3) {
+          if (occurances[key] >= 3 && key !== 'total') {
             sum = occurances.total;
           }
         });
@@ -217,7 +217,7 @@ const Scoreboard = ({
             : (occurances.total += die.value);
         });
         Object.keys(occurances).forEach((key) => {
-          if (occurances[key] >= 3) {
+          if (occurances[key] >= 4 && key !== 'total') {
             sum = occurances.total;
           }
         });
