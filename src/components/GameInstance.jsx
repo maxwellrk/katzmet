@@ -4,49 +4,31 @@ import Scoreboard from './Scoreboard';
 
 const GameInstance = (props) => {
   const [currentDice, changeCurrentDice] = useState([
-    { value: 1, color: 'black', held: false },
-    { value: 1, color: 'black', held: false },
-    { value: 1, color: 'black', held: false },
-    { value: 1, color: 'black', held: false },
-    { value: 1, color: 'black', held: false },
+    { value: '?', color: 'black', held: false },
+    { value: '?', color: 'black', held: false },
+    { value: '?', color: 'black', held: false },
+    { value: '?', color: 'black', held: false },
+    { value: '?', color: 'black', held: false },
   ]);
 
-  const [rollCount, decreaseRollCount] = useState(3);
-
-  // const [roundScores, changeRoundScores] = useState({
-  //   aces: 0,
-  //   deuces: 0,
-  //   treys: 0,
-  //   fours: 0,
-  //   fives: 0,
-  //   sixes: 0,
-  //   two_pair_same_color: 0,
-  //   three_of_a_kind: 0,
-  //   straight: 0,
-  //   flush: 0,
-  //   full_house: 0,
-  //   full_house_same_color: 0,
-  //   four_of_a_kind: 0,
-  //   yarbourough: 0,
-  //   kismet: 0,
-  // });
+  const [rollCount, changeRollCount] = useState(3);
 
   const [roundScores, changeRoundScores] = useState([
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
   ]);
 
   const selectRandomDie = () => {
@@ -69,7 +51,7 @@ const GameInstance = (props) => {
           return die.held ? die : selectRandomDie();
         })
       );
-      decreaseRollCount(rollCount - 1);
+      changeRollCount(rollCount - 1);
     }
   };
 
@@ -83,23 +65,29 @@ const GameInstance = (props) => {
     <div>
       <h1>Rolls Remaining: {rollCount}</h1>
       <Scoreboard
+        rollCount={rollCount}
         currentDice={currentDice}
+        changeCurrentDice={changeCurrentDice}
         roundScores={roundScores}
         changeRoundScores={changeRoundScores}
+        changeRollCount={changeRollCount}
       />
-      {currentDice.map((die, index) => {
-        return (
-          <Die
-            held={die.held}
-            value={die.value}
-            color={die.color}
-            key={index}
-            position={index}
-            holdDie={holdDie}
-          />
-        );
-      })}
-      <button onClick={() => diceShuffle()}>SHUFFLE DICE</button>
+      <div>
+        {currentDice.map((die, index) => {
+          return (
+            <Die
+              rollCount={rollCount}
+              held={die.held}
+              value={die.value}
+              color={die.color}
+              key={index}
+              position={index}
+              holdDie={holdDie}
+            />
+          );
+        })}
+        <button onClick={() => diceShuffle()}>SHUFFLE DICE</button>
+      </div>
     </div>
   );
 };

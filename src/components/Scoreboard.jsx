@@ -2,10 +2,12 @@ import React from 'react';
 import SingleScore from './SingleScore';
 
 const Scoreboard = ({
+  changeCurrentDice,
   currentDice,
   roundScores,
   changeRoundScores,
   changeRollCount,
+  rollCount,
 }) => {
   let scoringList = [
     [
@@ -257,14 +259,24 @@ const Scoreboard = ({
   ];
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '50vh',
+        flexWrap: 'wrap',
+        width: '50vw',
+      }}
+    >
       {scoringList.map((ele, index) => {
         return (
           <SingleScore
             title={ele[0]}
+            changeCurrentDice={changeCurrentDice}
             calculateScore={ele[1]}
             roundScore={roundScores[index]}
             changeRollCount={changeRollCount}
+            rollCount={rollCount}
           />
         );
       })}

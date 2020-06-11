@@ -5,21 +5,32 @@ const SingleScore = ({
   calculateScore,
   roundScore,
   changeRollCount,
+  rollCount,
+  changeCurrentDice,
 }) => {
   const [enabled, disable] = useState(true);
   return (
     <div>
-      <p style={{ display: 'inline' }}>{title}</p>
-      <p style={{ display: 'inline' }}>{roundScore}</p>
+      <p>{title}</p>
+      <p>{roundScore}</p>
       {enabled ? (
         <button
           onClick={() => {
-            calculateScore();
-            changeRollCount(3);
-            disable(false);
+            if (rollCount !== 3) {
+              calculateScore();
+              changeRollCount(3);
+              disable(false);
+              changeCurrentDice([
+                { value: '?', color: 'black', held: false },
+                { value: '?', color: 'black', held: false },
+                { value: '?', color: 'black', held: false },
+                { value: '?', color: 'black', held: false },
+                { value: '?', color: 'black', held: false },
+              ]);
+            }
           }}
         >
-          button
+          Add Score
         </button>
       ) : (
         <button>Complete</button>

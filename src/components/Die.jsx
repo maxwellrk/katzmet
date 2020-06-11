@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Die = ({ value, color, held, holdDie, position }) => {
+const Die = ({ value, color, held, holdDie, position, rollCount }) => {
   return (
     <div>
       <button
         onClick={() => {
-          holdDie(position);
+          if (rollCount !== 3) holdDie(position);
         }}
       >
         {held ? 'RETURN' : 'HOLD'}
