@@ -1,14 +1,35 @@
 import React, { useState } from 'react';
 import Die from './Die';
+import Scoreboard from './Scoreboard';
 
 const GameInstance = (props) => {
-  let [currentDice, changeCurrentDice] = useState([
+  const [currentDice, changeCurrentDice] = useState([
     { value: 1, color: 'black', held: false },
     { value: 1, color: 'black', held: false },
     { value: 1, color: 'black', held: false },
     { value: 1, color: 'black', held: false },
     { value: 1, color: 'black', held: false },
   ]);
+
+  const [rollCount, decreaseRollCount] = useState(3);
+
+  const [totals, changeTotals] = useState({
+    aces: 0,
+    deuces: 0,
+    treys: 0,
+    fours: 0,
+    fives: 0,
+    sixes: 0,
+    two_pair_same_color: 0,
+    three_of_a_kind: 0,
+    straight: 0,
+    flush: 0,
+    full_house: 0,
+    full_house_same_color: 0,
+    four_of_a_kind: 0,
+    yarbourough: 0,
+    kismet: 0,
+  });
 
   const selectRandomDie = () => {
     const value = Math.ceil(Math.random() * 6);
@@ -24,11 +45,14 @@ const GameInstance = (props) => {
   };
 
   const diceShuffle = () => {
-    changeCurrentDice(
-      currentDice.map((die) => {
-        return die.held ? die : selectRandomDie();
-      })
-    );
+    if (rollCount > 0) {
+      changeCurrentDice(
+        currentDice.map((die) => {
+          return die.held ? die : selectRandomDie();
+        })
+      );
+      decreaseRollCount(rollCount - 1);
+    }
   };
 
   const holdDie = (target) => {
@@ -39,6 +63,8 @@ const GameInstance = (props) => {
 
   return (
     <div>
+      <h1>Rolls Remaining: {rollCount}</h1>
+      <Scoreboard currentDice={currentDice} />
       {currentDice.map((die, index) => {
         return (
           <Die
