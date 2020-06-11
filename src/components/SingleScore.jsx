@@ -20,38 +20,14 @@ const SingleScore = ({
               calculateScore();
               changeRollCount(3);
               disable(false);
-              changeCurrentDice([
-                {
+              changeCurrentDice(
+                Array(5).fill({
                   value: '?',
                   imgPath: '../assets/die_none.jpg',
                   color: 'black',
                   held: false,
-                },
-                {
-                  value: '?',
-                  imgPath: '../assets/die_none.jpg',
-                  color: 'black',
-                  held: false,
-                },
-                {
-                  value: '?',
-                  imgPath: '../assets/die_none.jpg',
-                  color: 'black',
-                  held: false,
-                },
-                {
-                  value: '?',
-                  imgPath: '../assets/die_none.jpg',
-                  color: 'black',
-                  held: false,
-                },
-                {
-                  value: '?',
-                  imgPath: '../assets/die_none.jpg',
-                  color: 'black',
-                  held: false,
-                },
-              ]);
+                })
+              );
             }
           }}
         >

@@ -3,58 +3,18 @@ import Die from './Die';
 import Scoreboard from './Scoreboard';
 
 const GameInstance = (props) => {
-  const [currentDice, changeCurrentDice] = useState([
-    {
+  const [currentDice, changeCurrentDice] = useState(
+    Array(5).fill({
       value: '?',
       imgPath: '../assets/die_none.jpg',
       color: 'black',
       held: false,
-    },
-    {
-      value: '?',
-      imgPath: '../assets/die_none.jpg',
-      color: 'black',
-      held: false,
-    },
-    {
-      value: '?',
-      imgPath: '../assets/die_none.jpg',
-      color: 'black',
-      held: false,
-    },
-    {
-      value: '?',
-      imgPath: '../assets/die_none.jpg',
-      color: 'black',
-      held: false,
-    },
-    {
-      value: '?',
-      imgPath: '../assets/die_none.jpg',
-      color: 'black',
-      held: false,
-    },
-  ]);
+    })
+  );
 
   const [rollCount, changeRollCount] = useState(3);
 
-  const [roundScores, changeRoundScores] = useState([
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-  ]);
+  const [roundScores, changeRoundScores] = useState(Array(15).fill('?'));
 
   const selectRandomDie = () => {
     const value = Math.ceil(Math.random() * 6);
