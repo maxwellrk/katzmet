@@ -7,6 +7,10 @@ const SingleScore = ({
   changeRollCount,
   rollCount,
   changeCurrentDice,
+  round,
+  changeRound,
+  totalScore,
+  changeRoundScores,
 }) => {
   const [enabled, disable] = useState(true);
   return (
@@ -28,6 +32,16 @@ const SingleScore = ({
                   held: false,
                 })
               );
+              if (round === 15) {
+                // this doesn't work correctly because of async problems
+                // also the add score buttons need to reset, might have to move the state into
+                // scoreboard
+                alert(`Game Over!\nFinal Score: ${totalScore}`);
+                changeRoundScores(Array(15).fill('?'));
+                changeRound(1);
+              } else {
+                changeRound(round + 1);
+              }
             }
           }}
         >

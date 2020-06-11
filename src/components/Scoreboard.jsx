@@ -8,6 +8,8 @@ const Scoreboard = ({
   changeRoundScores,
   changeRollCount,
   rollCount,
+  round,
+  changeRound,
 }) => {
   let scoringList = [
     [
@@ -271,12 +273,16 @@ const Scoreboard = ({
       {scoringList.map((ele, index) => {
         return (
           <SingleScore
+            changeRoundScores={changeRoundScores}
             title={ele[0]}
             changeCurrentDice={changeCurrentDice}
             calculateScore={ele[1]}
             roundScore={roundScores[index]}
+            totalScore={roundScores}
             changeRollCount={changeRollCount}
             rollCount={rollCount}
+            round={round}
+            changeRound={changeRound}
           />
         );
       })}

@@ -12,6 +12,8 @@ const GameInstance = (props) => {
     })
   );
 
+  const [round, changeRound] = useState(1);
+
   const [rollCount, changeRollCount] = useState(3);
 
   const [roundScores, changeRoundScores] = useState(Array(15).fill('?'));
@@ -78,6 +80,8 @@ const GameInstance = (props) => {
         roundScores={roundScores}
         changeRoundScores={changeRoundScores}
         changeRollCount={changeRollCount}
+        round={round}
+        changeRound={changeRound}
       />
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         {currentDice.map((die, index) => {
