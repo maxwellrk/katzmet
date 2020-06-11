@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Die from './Die';
 
 const GameInstance = (props) => {
-  const [currentDice, changeCurrentDice] = useState([
-    { value: 1, color: 'black', held: false },
+  let [currentDice, changeCurrentDice] = useState([
     { value: 1, color: 'black', held: false },
     { value: 1, color: 'black', held: false },
     { value: 1, color: 'black', held: false },
@@ -11,17 +10,17 @@ const GameInstance = (props) => {
     { value: 1, color: 'black', held: false },
   ]);
 
-  const potentialDice = [
-    { value: 1, color: 'black', held: false },
-    { value: 2, color: 'red', held: false },
-    { value: 3, color: 'green', held: false },
-    { value: 4, color: 'green', held: false },
-    { value: 5, color: 'red', held: false },
-    { value: 6, color: 'black', held: false },
-  ];
-
   const selectRandomDie = () => {
-    return potentialDice[Math.floor(Math.random() * potentialDice.length)];
+    const value = Math.ceil(Math.random() * 6);
+    let color;
+    if (value === 1 || value === 6) {
+      color = 'black';
+    } else if (value === 2 || value === 4) {
+      color = 'red';
+    } else {
+      color = 'green';
+    }
+    return { value, color, held: false };
   };
 
   const diceShuffle = () => {
@@ -32,10 +31,25 @@ const GameInstance = (props) => {
     );
   };
 
+  const holdDie = (target) => {
+    const shallowCopy = [...currentDice];
+    shallowCopy[target].held = !shallowCopy[target].held;
+    changeCurrentDice(shallowCopy);
+  };
+
   return (
     <div>
       {currentDice.map((die, index) => {
-        return <Die value={die.value} color={die.color} key={index} />;
+        return (
+          <Die
+            held={die.held}
+            value={die.value}
+            color={die.color}
+            key={index}
+            position={index}
+            holdDie={holdDie}
+          />
+        );
       })}
       <button onClick={() => diceShuffle()}>SHUFFLE DICE</button>
     </div>
