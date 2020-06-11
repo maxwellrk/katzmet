@@ -4,44 +4,91 @@ import Scoreboard from './Scoreboard';
 
 const GameInstance = (props) => {
   const [currentDice, changeCurrentDice] = useState([
-    { value: '?', color: 'black', held: false },
-    { value: '?', color: 'black', held: false },
-    { value: '?', color: 'black', held: false },
-    { value: '?', color: 'black', held: false },
-    { value: '?', color: 'black', held: false },
+    {
+      value: '?',
+      imgPath: '../assets/die_none.jpg',
+      color: 'black',
+      held: false,
+    },
+    {
+      value: '?',
+      imgPath: '../assets/die_none.jpg',
+      color: 'black',
+      held: false,
+    },
+    {
+      value: '?',
+      imgPath: '../assets/die_none.jpg',
+      color: 'black',
+      held: false,
+    },
+    {
+      value: '?',
+      imgPath: '../assets/die_none.jpg',
+      color: 'black',
+      held: false,
+    },
+    {
+      value: '?',
+      imgPath: '../assets/die_none.jpg',
+      color: 'black',
+      held: false,
+    },
   ]);
 
   const [rollCount, changeRollCount] = useState(3);
 
   const [roundScores, changeRoundScores] = useState([
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
   ]);
 
   const selectRandomDie = () => {
     const value = Math.ceil(Math.random() * 6);
     let color;
-    if (value === 1 || value === 6) {
-      color = 'black';
-    } else if (value === 2 || value === 4) {
-      color = 'red';
-    } else {
-      color = 'green';
+    let imgPath;
+
+    switch (value) {
+      case 1:
+        color = 'black';
+        imgPath = '../assets/die_1.png';
+        break;
+      case 2:
+        color = 'red';
+        imgPath = '../assets/die_2.png';
+        break;
+      case 3:
+        color = 'green';
+        imgPath = '../assets/die_3.png';
+        break;
+      case 4:
+        color = 'red';
+        imgPath = '../assets/die_4.png';
+        break;
+      case 5:
+        color = 'green';
+        imgPath = '../assets/die_5.png';
+        break;
+      case 6:
+        color = 'black';
+        imgPath = '../assets/die_6.png';
+        break;
     }
-    return { value, color, held: false };
+
+    return { value, color, imgPath, held: false };
   };
 
   const diceShuffle = () => {
@@ -72,10 +119,11 @@ const GameInstance = (props) => {
         changeRoundScores={changeRoundScores}
         changeRollCount={changeRollCount}
       />
-      <div>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
         {currentDice.map((die, index) => {
           return (
             <Die
+              imgPath={die.imgPath}
               rollCount={rollCount}
               held={die.held}
               value={die.value}

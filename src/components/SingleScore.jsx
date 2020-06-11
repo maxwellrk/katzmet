@@ -21,11 +21,36 @@ const SingleScore = ({
               changeRollCount(3);
               disable(false);
               changeCurrentDice([
-                { value: '?', color: 'black', held: false },
-                { value: '?', color: 'black', held: false },
-                { value: '?', color: 'black', held: false },
-                { value: '?', color: 'black', held: false },
-                { value: '?', color: 'black', held: false },
+                {
+                  value: '?',
+                  imgPath: '../assets/die_none.jpg',
+                  color: 'black',
+                  held: false,
+                },
+                {
+                  value: '?',
+                  imgPath: '../assets/die_none.jpg',
+                  color: 'black',
+                  held: false,
+                },
+                {
+                  value: '?',
+                  imgPath: '../assets/die_none.jpg',
+                  color: 'black',
+                  held: false,
+                },
+                {
+                  value: '?',
+                  imgPath: '../assets/die_none.jpg',
+                  color: 'black',
+                  held: false,
+                },
+                {
+                  value: '?',
+                  imgPath: '../assets/die_none.jpg',
+                  color: 'black',
+                  held: false,
+                },
               ]);
             }
           }}
