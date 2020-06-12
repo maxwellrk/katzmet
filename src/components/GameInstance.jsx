@@ -4,6 +4,17 @@ import Scoreboard from './Scoreboard';
 import socketInstance from '../socket';
 
 const GameInstance = () => {
+  useEffect(() => {
+    socketInstance.on('holdDiePosition', (dicePosition) => {
+      changeCurrentDice(dicePosition);
+    });
+
+    socketInstance.on('shuffleDice', (dice) => {
+      changeCurrentDice(dice.newDice);
+      changeRollCount(dice.rollCount);
+    });
+  }, []);
+
   const [currentDice, changeCurrentDice] = useState(
     Array(5).fill({
       value: '?',
@@ -12,17 +23,6 @@ const GameInstance = () => {
       held: false,
     })
   );
-
-  useEffect(() => {
-    socketInstance.on('holdDiePosition', (dicePosition) =>
-      changeCurrentDice(dicePosition)
-    );
-
-    socketInstance.on('shuffleDice', (dice) => {
-      changeCurrentDice(dice.newDice);
-      changeRollCount(dice.rollCount);
-    });
-  }, []);
 
   const [round, changeRound] = useState(1);
 
@@ -49,11 +49,11 @@ const GameInstance = () => {
         imgPath = '../assets/die_3.png';
         break;
       case 4:
-        color = 'red';
+        color = 'green';
         imgPath = '../assets/die_4.png';
         break;
       case 5:
-        color = 'green';
+        color = 'red';
         imgPath = '../assets/die_5.png';
         break;
       case 6:
@@ -112,6 +112,8 @@ const GameInstance = () => {
           );
         })}
         <button onClick={() => diceShuffle()}>SHUFFLE DICE</button>
+        {round === 16 && <button>Calculate Score</button>}
+        {round === 16 && <button>Reset Game</button>}
       </div>
     </div>
   );
