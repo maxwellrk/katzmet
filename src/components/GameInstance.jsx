@@ -17,6 +17,11 @@ const GameInstance = () => {
     socketInstance.on('holdDiePosition', (dicePosition) =>
       changeCurrentDice(dicePosition)
     );
+
+    socketInstance.on('shuffleDice', (dice) => {
+      changeCurrentDice(dice.newDice);
+      changeRollCount(dice.rollCount);
+    });
   }, []);
 
   const [round, changeRound] = useState(1);
@@ -62,12 +67,12 @@ const GameInstance = () => {
 
   const diceShuffle = () => {
     if (rollCount > 0) {
-      changeCurrentDice(
-        currentDice.map((die) => {
+      socketInstance.emit('shuffleDice', {
+        newDice: currentDice.map((die) => {
           return die.held ? die : selectRandomDie();
-        })
-      );
-      changeRollCount(rollCount - 1);
+        }),
+        rollCount: rollCount - 1,
+      });
     }
   };
 
@@ -76,6 +81,7 @@ const GameInstance = () => {
     shallowCopy[target].held = !shallowCopy[target].held;
     socketInstance.emit('holdDiePosition', shallowCopy);
   };
+
   return (
     <div>
       <h1>Rolls Remaining: {rollCount}</h1>

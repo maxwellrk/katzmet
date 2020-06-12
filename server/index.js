@@ -18,6 +18,11 @@ io.on('connection', (socket) => {
   socket.on('holdDiePosition', (position) => {
     io.emit('holdDiePosition', position);
   });
+
+  socket.on('shuffleDice', (dice) => {
+    io.emit('shuffleDice', dice);
+  });
+
   socket.on('disconnect', () => {
     console.log(
       'user disconnected, there are,',
