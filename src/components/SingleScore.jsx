@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import socketInstance from '../socket';
 
 const SingleScore = ({
   title,
@@ -9,39 +10,48 @@ const SingleScore = ({
   changeCurrentDice,
   round,
   changeRound,
-  totalScore,
   changeRoundScores,
+  index,
 }) => {
   const [enabled, disable] = useState(true);
+  useEffect(() => {
+    socketInstance.on('saveScore', (scores) => {
+      if (scores.index === index) {
+        changeRollCount(3);
+        disable(false);
+        changeCurrentDice(
+          Array(5).fill({
+            value: '?',
+            imgPath: '../assets/die_none.jpg',
+            color: 'black',
+            held: false,
+          })
+        );
+        changeRound(round + 1);
+        changeRoundScores(scores.newScores);
+      }
+    });
+
+    return () => {
+      if (socketInstance.listeners('saveScore').length === 15) {
+        socketInstance.off('saveScore');
+      }
+    };
+  }, [round]);
+
   return (
     <div>
       <p>{title}</p>
       <p>{roundScore}</p>
       {enabled ? (
         <button
+          data-number={index}
           onClick={() => {
             if (rollCount !== 3) {
-              calculateScore();
-              changeRollCount(3);
-              disable(false);
-              changeCurrentDice(
-                Array(5).fill({
-                  value: '?',
-                  imgPath: '../assets/die_none.jpg',
-                  color: 'black',
-                  held: false,
-                })
-              );
-              if (round === 15) {
-                // this doesn't work correctly because of async problems
-                // also the add score buttons need to reset, might have to move the state into
-                // scoreboard
-                alert(`Game Over!\nFinal Score: ${totalScore}`);
-                changeRoundScores(Array(15).fill('?'));
-                changeRound(1);
-              } else {
-                changeRound(round + 1);
-              }
+              socketInstance.emit('saveScore', {
+                newScores: calculateScore(),
+                index,
+              });
             }
           }}
         >

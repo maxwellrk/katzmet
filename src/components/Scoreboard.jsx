@@ -21,7 +21,7 @@ const Scoreboard = ({
         });
         let shallow = [...roundScores];
         shallow[0] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -33,7 +33,7 @@ const Scoreboard = ({
         });
         let shallow = [...roundScores];
         shallow[1] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -45,7 +45,7 @@ const Scoreboard = ({
         });
         let shallow = [...roundScores];
         shallow[2] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -57,7 +57,7 @@ const Scoreboard = ({
         });
         let shallow = [...roundScores];
         shallow[3] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -69,7 +69,7 @@ const Scoreboard = ({
         });
         let shallow = [...roundScores];
         shallow[4] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -81,7 +81,7 @@ const Scoreboard = ({
         });
         let shallow = [...roundScores];
         shallow[5] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -104,7 +104,7 @@ const Scoreboard = ({
         });
         let shallow = [...roundScores];
         shallow[6] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -127,7 +127,7 @@ const Scoreboard = ({
         });
         let shallow = [...roundScores];
         shallow[7] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -138,7 +138,7 @@ const Scoreboard = ({
         let unique = [...new Set(currentDice.map((die) => die.value))];
         if (unique.length === 5) sum += 30;
         shallow[8] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -149,7 +149,7 @@ const Scoreboard = ({
         let unique = [...new Set(currentDice.map((die) => die.color))];
         if (unique.length === 1) sum += 35;
         shallow[9] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -175,7 +175,7 @@ const Scoreboard = ({
           sum += 15;
         }
         shallow[10] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -202,7 +202,7 @@ const Scoreboard = ({
           sum += 15;
         }
         shallow[11] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -226,7 +226,7 @@ const Scoreboard = ({
         if (sum > 0) sum += 25;
         let shallow = [...roundScores];
         shallow[12] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -238,7 +238,7 @@ const Scoreboard = ({
           sum += die.value;
         });
         shallow[13] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
     [
@@ -255,7 +255,7 @@ const Scoreboard = ({
           sum += 50;
         }
         shallow[14] = sum;
-        changeRoundScores(shallow);
+        return shallow;
       },
     ],
   ];
@@ -283,6 +283,7 @@ const Scoreboard = ({
             rollCount={rollCount}
             round={round}
             changeRound={changeRound}
+            index={index}
           />
         );
       })}

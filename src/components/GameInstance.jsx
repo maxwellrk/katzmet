@@ -1,8 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Die from './Die';
 import Scoreboard from './Scoreboard';
+import socketInstance from '../socket';
 
-const GameInstance = (props) => {
+const GameInstance = () => {
+  useEffect(() => {
+    socketInstance.on('holdDiePosition', (dicePosition) => {
+      changeCurrentDice(dicePosition);
+    });
+
+    socketInstance.on('shuffleDice', (dice) => {
+      changeCurrentDice(dice.newDice);
+      changeRollCount(dice.rollCount);
+    });
+
+    return () => {
+      socketInstance.off('shuffleDice');
+      socketInstance.off('holdDiePosition');
+    };
+  }, []);
+
   const [currentDice, changeCurrentDice] = useState(
     Array(5).fill({
       value: '?',
@@ -37,11 +54,11 @@ const GameInstance = (props) => {
         imgPath = '../assets/die_3.png';
         break;
       case 4:
-        color = 'red';
+        color = 'green';
         imgPath = '../assets/die_4.png';
         break;
       case 5:
-        color = 'green';
+        color = 'red';
         imgPath = '../assets/die_5.png';
         break;
       case 6:
@@ -55,19 +72,19 @@ const GameInstance = (props) => {
 
   const diceShuffle = () => {
     if (rollCount > 0) {
-      changeCurrentDice(
-        currentDice.map((die) => {
+      socketInstance.emit('shuffleDice', {
+        newDice: currentDice.map((die) => {
           return die.held ? die : selectRandomDie();
-        })
-      );
-      changeRollCount(rollCount - 1);
+        }),
+        rollCount: rollCount - 1,
+      });
     }
   };
 
   const holdDie = (target) => {
     const shallowCopy = [...currentDice];
     shallowCopy[target].held = !shallowCopy[target].held;
-    changeCurrentDice(shallowCopy);
+    socketInstance.emit('holdDiePosition', shallowCopy);
   };
 
   return (
@@ -95,10 +112,29 @@ const GameInstance = (props) => {
               key={index}
               position={index}
               holdDie={holdDie}
+              socketInstance={socketInstance}
             />
           );
         })}
         <button onClick={() => diceShuffle()}>SHUFFLE DICE</button>
+        {round === 16 && (
+          <button
+            onClick={() => {
+              alert(`Your Final Score: ${roundScores.reduce((a, b) => a + b)}`);
+            }}
+          >
+            Calculate Score
+          </button>
+        )}
+        {round === 16 && (
+          <button
+            onClick={() => {
+              socketInstance.emit('reset');
+            }}
+          >
+            Reset Game
+          </button>
+        )}
       </div>
     </div>
   );
