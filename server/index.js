@@ -23,6 +23,10 @@ io.on('connection', (socket) => {
     io.emit('shuffleDice', dice);
   });
 
+  socket.on('saveScore', (scores) => {
+    io.emit('saveScore', scores);
+  });
+
   socket.on('disconnect', () => {
     console.log(
       'user disconnected, there are,',
