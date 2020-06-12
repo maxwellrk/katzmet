@@ -28,7 +28,6 @@ const SingleScore = ({
           })
         );
         changeRound(round + 1);
-        console.log(round);
         changeRoundScores(scores.newScores);
       }
     });

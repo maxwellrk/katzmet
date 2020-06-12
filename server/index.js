@@ -27,6 +27,10 @@ io.on('connection', (socket) => {
     io.emit('saveScore', scores);
   });
 
+  socket.on('reset', () => {
+    io.emit('reset');
+  });
+
   socket.on('disconnect', () => {
     console.log(
       'user disconnected, there are,',

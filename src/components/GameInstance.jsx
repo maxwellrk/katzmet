@@ -13,6 +13,11 @@ const GameInstance = () => {
       changeCurrentDice(dice.newDice);
       changeRollCount(dice.rollCount);
     });
+
+    return () => {
+      socketInstance.off('shuffleDice');
+      socketInstance.off('holdDiePosition');
+    };
   }, []);
 
   const [currentDice, changeCurrentDice] = useState(
@@ -112,8 +117,24 @@ const GameInstance = () => {
           );
         })}
         <button onClick={() => diceShuffle()}>SHUFFLE DICE</button>
-        {round === 16 && <button>Calculate Score</button>}
-        {round === 16 && <button>Reset Game</button>}
+        {round === 16 && (
+          <button
+            onClick={() => {
+              alert(`Your Final Score: ${roundScores.reduce((a, b) => a + b)}`);
+            }}
+          >
+            Calculate Score
+          </button>
+        )}
+        {round === 16 && (
+          <button
+            onClick={() => {
+              socketInstance.emit('reset');
+            }}
+          >
+            Reset Game
+          </button>
+        )}
       </div>
     </div>
   );
