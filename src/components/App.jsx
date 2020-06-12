@@ -1,9 +1,10 @@
-import React from 'React';
+import React from 'react';
+import GameInstance from './GameInstance';
 
 const App = () => {
   return (
     <div>
-      <p>Hello World!</p>
+      <GameInstance />
     </div>
   );
 };
