@@ -89,7 +89,8 @@ const GameInstance = () => {
 
   return (
     <div>
-      <h1>Rolls Remaining: {rollCount}</h1>
+      <h1>Katzmet</h1>
+      <h2>Rolls Remaining: {rollCount}</h2>
       <Scoreboard
         rollCount={rollCount}
         currentDice={currentDice}
@@ -135,6 +136,30 @@ const GameInstance = () => {
             Reset Game
           </button>
         )}
+      </div>
+      <div id={'rules'} style={{ fontSize: '14px', marginTop: '40px' }}>
+        <h2>Rules:</h2>
+        <p>Aces: 1 point for each "1"</p>
+        <p>Deuces: 2 points for each "2"</p>
+        <p>Treys: 3 points for each "3"</p>
+        <p>Fours: 4 points for each "4"</p>
+        <p>Fives: 5 points for each "5"</p>
+        <p>Sixes: 6 points for each "6"</p>
+        <p>Two Pair: 2 pairs of the same color scores total of all 5 dice</p>
+        <p>ToaK: 3 of any value scores total of all 5 dice</p>
+        <p>Straight: 5 numbers in a row scores 30</p>
+        <p>Flush: All dice of the same color scores 35</p>
+        <p>
+          Full House: 3 of one value and 2 of another value scores total of all
+          5 dice plus 15
+        </p>
+        <p>
+          FHSC: 3 of one value and 2 of another value all of the same color
+          scores total of all 5 dice plus 20
+        </p>
+        <p>FoaK: 4 of any value scores total of all 5 dice plus 25</p>
+        <p>Yarbourough: Total of all 5 dice</p>
+        <p>Kismet: 5 of any value scores total of all 5 dice plus 50</p>
       </div>
     </div>
   );
