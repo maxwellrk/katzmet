@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Die from './Die';
 import Scoreboard from './Scoreboard';
+import socketInstance from '../socket';
 
-const GameInstance = (props) => {
+const GameInstance = () => {
   const [currentDice, changeCurrentDice] = useState(
     Array(5).fill({
       value: '?',
@@ -11,6 +12,12 @@ const GameInstance = (props) => {
       held: false,
     })
   );
+
+  useEffect(() => {
+    socketInstance.on('holdDiePosition', (dicePosition) =>
+      changeCurrentDice(dicePosition)
+    );
+  }, []);
 
   const [round, changeRound] = useState(1);
 
@@ -67,9 +74,8 @@ const GameInstance = (props) => {
   const holdDie = (target) => {
     const shallowCopy = [...currentDice];
     shallowCopy[target].held = !shallowCopy[target].held;
-    changeCurrentDice(shallowCopy);
+    socketInstance.emit('holdDiePosition', shallowCopy);
   };
-
   return (
     <div>
       <h1>Rolls Remaining: {rollCount}</h1>
@@ -95,6 +101,7 @@ const GameInstance = (props) => {
               key={index}
               position={index}
               holdDie={holdDie}
+              socketInstance={socketInstance}
             />
           );
         })}
